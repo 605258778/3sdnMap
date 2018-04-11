@@ -40,6 +40,8 @@
             this.Configure = new System.Windows.Forms.ToolStripMenuItem();
             this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newPro = new System.Windows.Forms.ToolStripMenuItem();
+            this.测试工程设置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.数据质检 = new System.Windows.Forms.ToolStripMenuItem();
             this.axToolbarControl1 = new ESRI.ArcGIS.Controls.AxToolbarControl();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.MessageLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -54,6 +56,8 @@
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.axToolbarControl2 = new ESRI.ArcGIS.Controls.AxToolbarControl();
+            this.axMapControl2 = new ESRI.ArcGIS.Controls.AxMapControl();
             this.axMapControl1 = new ESRI.ArcGIS.Controls.AxMapControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.axLicenseControl1 = new ESRI.ArcGIS.Controls.AxLicenseControl();
@@ -72,6 +76,8 @@
             this.tabPage2.SuspendLayout();
             this.tabControl2.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.axToolbarControl2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.axMapControl2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.axMapControl1)).BeginInit();
             this.tabPage4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.axLicenseControl1)).BeginInit();
@@ -84,7 +90,9 @@
             this.file,
             this.Configure,
             this.testToolStripMenuItem,
-            this.newPro});
+            this.newPro,
+            this.测试工程设置ToolStripMenuItem,
+            this.数据质检});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1052, 28);
@@ -166,6 +174,20 @@
             this.newPro.Size = new System.Drawing.Size(51, 24);
             this.newPro.Text = "新建";
             this.newPro.Click += new System.EventHandler(this.newPro_Click);
+            // 
+            // 测试工程设置ToolStripMenuItem
+            // 
+            this.测试工程设置ToolStripMenuItem.Name = "测试工程设置ToolStripMenuItem";
+            this.测试工程设置ToolStripMenuItem.Size = new System.Drawing.Size(111, 24);
+            this.测试工程设置ToolStripMenuItem.Text = "测试工程设置";
+            this.测试工程设置ToolStripMenuItem.Click += new System.EventHandler(this.测试工程设置ToolStripMenuItem_Click);
+            // 
+            // 数据质检
+            // 
+            this.数据质检.Name = "数据质检";
+            this.数据质检.Size = new System.Drawing.Size(81, 24);
+            this.数据质检.Text = "数据质检";
+            this.数据质检.Click += new System.EventHandler(this.数据质检_Click);
             // 
             // axToolbarControl1
             // 
@@ -297,6 +319,8 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.axToolbarControl2);
+            this.tabPage3.Controls.Add(this.axMapControl2);
             this.tabPage3.Controls.Add(this.axMapControl1);
             this.tabPage3.Location = new System.Drawing.Point(4, 25);
             this.tabPage3.Name = "tabPage3";
@@ -305,6 +329,24 @@
             this.tabPage3.TabIndex = 0;
             this.tabPage3.Text = "地图";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // axToolbarControl2
+            // 
+            this.axToolbarControl2.Location = new System.Drawing.Point(318, 172);
+            this.axToolbarControl2.Name = "axToolbarControl2";
+            this.axToolbarControl2.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axToolbarControl2.OcxState")));
+            this.axToolbarControl2.Size = new System.Drawing.Size(331, 28);
+            this.axToolbarControl2.TabIndex = 2;
+            this.axToolbarControl2.Visible = false;
+            // 
+            // axMapControl2
+            // 
+            this.axMapControl2.Location = new System.Drawing.Point(387, 172);
+            this.axMapControl2.Name = "axMapControl2";
+            this.axMapControl2.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axMapControl2.OcxState")));
+            this.axMapControl2.Size = new System.Drawing.Size(125, 53);
+            this.axMapControl2.TabIndex = 1;
+            this.axMapControl2.Visible = false;
             // 
             // axMapControl1
             // 
@@ -364,6 +406,7 @@
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.axToolbarControl1);
             this.Controls.Add(this.menuStrip1);
+            this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -385,6 +428,8 @@
             this.tabPage2.ResumeLayout(false);
             this.tabControl2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.axToolbarControl2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.axMapControl2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.axMapControl1)).EndInit();
             this.tabPage4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.axLicenseControl1)).EndInit();
@@ -426,6 +471,10 @@
         private System.Windows.Forms.ToolStripMenuItem testToolStripMenuItem;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolStripMenuItem newPro;
+        private System.Windows.Forms.ToolStripMenuItem 测试工程设置ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 数据质检;
+        private ESRI.ArcGIS.Controls.AxMapControl axMapControl2;
+        private ESRI.ArcGIS.Controls.AxToolbarControl axToolbarControl2;
     }
 }
 

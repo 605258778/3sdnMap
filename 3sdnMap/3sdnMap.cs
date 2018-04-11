@@ -15,7 +15,7 @@ using ESRI.ArcGIS.Geometry;
 using ESRI.ArcGIS.SystemUI;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.DataSourcesGDB;
-
+using System.Data.OleDb;
 
 namespace _3sdnMap
 {
@@ -23,7 +23,6 @@ namespace _3sdnMap
     {
         private ESRI.ArcGIS.Controls.IMapControl3 m_mapControl = null;
         private ESRI.ArcGIS.Controls.IPageLayoutControl2 m_pageLayoutControl = null;
-        private IMapDocument pMapDocument;
         private ControlsSynchronizer m_controlsSynchronizer = null;
         //TOCControl控件变量
         private ITOCControl2 m_tocControl = null;
@@ -31,7 +30,8 @@ namespace _3sdnMap
         private IToolbarMenu m_menuMap = null;
         //TOCControl中图层菜单
         private IToolbarMenu m_menuLayer = null;
-        
+        private IActiveViewEvents_Event m_MapActiveViewEvents;
+        private TextBox TextBoxGlob = null;
 
         public Form1()
         {
@@ -252,7 +252,7 @@ namespace _3sdnMap
         private void Configure_Click(object sender, EventArgs e)
         {
             formConfigur configur = new formConfigur();
-            configur.Show();
+            configur.ShowDialog();
         }
 
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
@@ -315,7 +315,128 @@ namespace _3sdnMap
         private void newPro_Click(object sender, EventArgs e)
         {
             formNewPro fromNewProDig = new formNewPro();
-            fromNewProDig.Show();
+            fromNewProDig.ShowDialog();
+        }
+
+        private void 测试工程设置ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string strFilePath = "Provider=Microsoft.ACE.OLEDB.12.0;Data source=" + Application.StartupPath + "\\makemoney.mdb";
+            System.Data.OleDb.OleDbConnection conn = new OleDbConnection(strFilePath);
+            try
+            {
+                FormSetpara FormSetparaDig = new FormSetpara(); 
+                OleDbDataAdapter adapter = new OleDbDataAdapter();
+                string sqlstr = "select * from 工程参数表";
+                DataSet ds = new DataSet();
+                conn.Open();
+                adapter.SelectCommand = new OleDbCommand(sqlstr, conn);
+                adapter.Fill(ds, "工程参数表");
+                DataTable dt = ds.Tables["工程参数表"];
+                DataRow[] dr = dt.Select("1=1");
+                conn.Close();
+                for (int i = 0; i < dr.Length; i++) 
+                {
+                    Label lb = new Label();
+                    lb.Location = new System.Drawing.Point(75, 60*(i+1)-30);
+                    lb.Text = dr[i]["参数名称"].ToString()+":";
+                    lb.Name = "lable" + i.ToString();
+                    lb.AutoSize = true;
+                    TextBox tx = new TextBox();
+                    tx.Location = new System.Drawing.Point(75, 30 * 2 * (i + 1));
+                    tx.Size = new System.Drawing.Size(400, 25);
+                    tx.Tag = dr[i]["ID"].ToString();
+                    tx.Name = dr[i]["参数名称"].ToString();
+                    Button bt = new Button();
+                    bt.Location = new System.Drawing.Point(500, 30 * 2 * (i + 1));
+                    bt.Text = "浏览";
+                    bt.Name = dr[i]["参数名称"].ToString()+"Add";
+                    bt.Click += (se, a) => addFile(tx);
+                    FormSetparaDig.Controls.Add(lb);
+                    FormSetparaDig.Controls.Add(tx);
+                    FormSetparaDig.Controls.Add(bt);
+                }
+                Button btok = new Button();
+                btok.Location = new System.Drawing.Point(500, 30 * 2 * (dr.Length + 1));
+                btok.Text = "确定";
+                btok.Click += (se, a) => SelectOk(FormSetparaDig);
+                FormSetparaDig.Controls.Add(btok);
+                FormSetparaDig.ShowDialog();
+            }
+            catch (Exception exc)
+            {
+                throw (new Exception("数据库出错:" + exc.Message));
+            }
+        }
+
+        private void SelectOk(FormSetpara FormSetparaDig)
+        {
+            FormSetparaDig.Close();
+        }
+
+        private void addFile(TextBox tx) 
+        {
+            TextBoxGlob = tx;
+            initMapEvents();
+            //var layers = SelectDataUtils.OpenLayers();
+            axMapControl2.ClearLayers();
+            ICommand cmd = new ControlsAddDataCommand();
+            cmd.OnCreate(axMapControl2.Object);
+            cmd.OnClick();
+        }
+
+        private void 工程设置ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormSetpara FormSetparaDig = new FormSetpara();
+            FormSetparaDig.ShowDialog();
+        }
+
+        private void initMapEvents() 
+        {
+            m_MapActiveViewEvents = axMapControl2.Map as IActiveViewEvents_Event;
+            //对于Map，在添加图层后触发，对于PageLayout在添加任何要素时都会触发
+            m_MapActiveViewEvents.ItemAdded += new IActiveViewEvents_ItemAddedEventHandler(m_MapActiveViewEvents_ItemAdded);
+        }
+        void m_MapActiveViewEvents_ItemAdded(object Item)
+        {
+            for (int i = 1; i <= axMapControl2.LayerCount; i++)
+            {
+
+                ILayer layer = axMapControl2.get_Layer(axMapControl2.LayerCount - i);
+                axMapControl2.ClearLayers();
+                IDataset dataset = layer as IDataset;
+                IWorkspace workspace = dataset.Workspace;
+                string outname = layer.Name;
+                string outpath = workspace.PathName;
+                TextBoxGlob.Text = outpath +"\\"+ outname;
+                string strFilePath = "Provider=Microsoft.ACE.OLEDB.12.0;Data source=" + Application.StartupPath + "\\makemoney.mdb";
+                string sql = "update 工程参数表 set 路径 = '" + outpath + "\\" + outname + "' where ID = " + TextBoxGlob.Tag;
+                System.Data.OleDb.OleDbConnection con = new OleDbConnection(strFilePath);
+                try
+                {
+                    OleDbCommand cmd = new OleDbCommand(sql, con);
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.ToString());
+                }
+                finally
+                {
+                    con.Close();
+                    con.Dispose();
+                }
+            }
+        }
+
+        private void ttttToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void 数据质检_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

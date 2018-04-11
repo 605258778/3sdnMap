@@ -203,7 +203,8 @@ namespace _3sdnMap
 
         private void button6_Click(object sender, EventArgs e)
         {
-            formProperty formPropertyDig = new formProperty();
+            DelegateRefreshTree RefreshTree = new DelegateRefreshTree(bindTreeView1);
+            formProperty formPropertyDig = new formProperty(this.treeView1, RefreshTree);
             formPropertyDig.Show();
         }
 
@@ -265,10 +266,14 @@ namespace _3sdnMap
         private void 添加分组_Click(object sender, EventArgs e)
         {
             DelegateRefreshTree RefreshTree = new DelegateRefreshTree(bindTreeView1);
-            string level = this.treeView1.SelectedNode != null ? this.treeView1.SelectedNode.Tag.ToString():"0";
             FormGroup FormGroupDig = new FormGroup(this.treeView1, RefreshTree);
             FormGroupDig.Show();
             this.treeView1.Refresh();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

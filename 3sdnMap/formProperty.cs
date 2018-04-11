@@ -13,9 +13,19 @@ namespace _3sdnMap
 {
     public partial class formProperty : Form
     {
+        private TreeView treeView;
+        private formNewPro.DelegateRefreshTree RefreshTree;
         public formProperty()
         {
             InitializeComponent();
+        }
+
+        public formProperty(TreeView treeView, formNewPro.DelegateRefreshTree RefreshTree)
+        {
+            // TODO: Complete member initialization
+            InitializeComponent();
+            this.treeView = treeView;
+            this.RefreshTree = RefreshTree;
         }
 
         private void FormProperty_Load(object sender, EventArgs e)
@@ -34,14 +44,16 @@ namespace _3sdnMap
 
         private void button2_Click(object sender, EventArgs e)
         {
+            string level = this.treeView.SelectedNode != null ? this.treeView.SelectedNode.Tag.ToString() : "0";
             string checkName = this.textBox1.Text;
-            string dataSource = this.comboBox1.SelectedItem.ToString();
-            string checkOption = this.comboBox2.SelectedItem.ToString();
+            string dataSource = this.comboBox1.Text;
+            string checkOption = this.comboBox2.Text;
             string checkwhere = this.textBox3.Text;
             string checkResult = this.textBox4.Text;
 
             string strFilePath = "Provider=Microsoft.ACE.OLEDB.12.0;Data source=" + Application.StartupPath + "\\makemoney.mdb";
-            string sql = "insert into 属性检查表 (参数名称,参数类型,备注) VALUES('','','')";
+            string sql = "insert into 属性检查表 (父节点,检查项,涉及表,辅助表,检查类型,筛选,条件,结果,是否质检项) VALUES(" + level
+                + ",'" + checkName + "','" + dataSource + "','','','" + checkOption + "','" + checkwhere + "','" + checkResult + "','1')";
             System.Data.OleDb.OleDbConnection con = new OleDbConnection(strFilePath);
             try
             {
@@ -57,6 +69,8 @@ namespace _3sdnMap
             {
                 con.Close();
                 con.Dispose();
+                this.Close();
+                RefreshTree();
             }
         }
     }

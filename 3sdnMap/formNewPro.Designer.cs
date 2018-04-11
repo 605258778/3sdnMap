@@ -50,6 +50,8 @@
             this.拓扑检查表BindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.makemoneyDataSet1 = new _3sdnMap.makemoneyDataSet1();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
             this.属性删除 = new System.Windows.Forms.Button();
             this.属性编辑 = new System.Windows.Forms.Button();
             this.添加项 = new System.Windows.Forms.Button();
@@ -84,7 +86,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(705, 417);
+            this.tabControl1.Size = new System.Drawing.Size(705, 471);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -96,7 +98,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(697, 388);
+            this.tabPage1.Size = new System.Drawing.Size(697, 442);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "参数设置";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -199,7 +201,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(697, 388);
+            this.tabPage2.Size = new System.Drawing.Size(697, 442);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "图形检查";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -277,6 +279,8 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.button1);
+            this.tabPage4.Controls.Add(this.button5);
             this.tabPage4.Controls.Add(this.属性删除);
             this.tabPage4.Controls.Add(this.属性编辑);
             this.tabPage4.Controls.Add(this.添加项);
@@ -285,10 +289,30 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 25);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(697, 388);
+            this.tabPage4.Size = new System.Drawing.Size(697, 442);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "属性检查";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(480, 398);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 8;
+            this.button1.Text = "确定";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(574, 398);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(75, 23);
+            this.button5.TabIndex = 8;
+            this.button5.Text = "取消";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // 属性删除
             // 
@@ -361,7 +385,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(705, 417);
+            this.ClientSize = new System.Drawing.Size(705, 471);
             this.Controls.Add(this.tabControl1);
             this.Name = "formNewPro";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -417,5 +441,7 @@
         private System.Windows.Forms.Button 属性编辑;
         private System.Windows.Forms.Button 添加分组;
         private System.Windows.Forms.Button 添加项;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button1;
     }
 }
